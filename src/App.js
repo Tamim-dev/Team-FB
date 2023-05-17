@@ -42,7 +42,7 @@ function App() {
           setCount(count + add *1)
           setErrorA(false)
           set(push(ref(db, 'Team-fb/')), {
-            addvalue : add,count
+            addvalue : ` ${count} Added by ${add} toltal value ${count+add*1}`
           }).then=()=>{
             console.log("Data geca")
           }
@@ -59,7 +59,7 @@ function App() {
         if (division - 10 || division == 10) {
           setCount(count / division)
           set(push(ref(db, 'Team-fb/')), {
-            divivalue : division,count
+            divivalue : ` ${count} Divided ${division} toltal value ${count/division}`
           }).then=()=>{
             console.log("Data geca")
           }
@@ -77,7 +77,7 @@ function App() {
           setErrorA(false)
         if (multi - 10 || multi == 10) {
           set(push(ref(db, 'Team-fb/')), {
-            multivalue : multi,count
+            multivalue : ` ${count} Multiplication ${multi} toltal value ${count*multi}`
           }).then=()=>{
             console.log("Data geca")
           }
@@ -96,7 +96,7 @@ function App() {
         setErrorA(false)
         if (sub - 10 || sub == 10) {
           set(push(ref(db, 'Team-fb/')), {
-            subvalue : sub,count
+            subvalue : ` ${count} Minus ${sub} toltal value ${count-sub}`
           }).then=()=>{
             console.log("Data geca")
           }
@@ -117,6 +117,12 @@ function App() {
         setMulti("")
         setSub("")
       }
+  }
+
+  let hadelDelete =(item)=>{
+    remove(ref(db, 'Team-fb/'+item.id)).then(()=>{
+      console.log("delete hoica")
+    })
   }
   return (
     <>
@@ -153,9 +159,9 @@ function App() {
     </div>
     <div className='w-[35%] bg-red-400'>
     <h2 className='text-center mt-20 text-3xl font-semibold'>History</h2>
-    <ol className='list-decimal text-2xl font-medium'>
+    <ol className='list-decimal text-xl font-medium'>
       {historyarr.map((item,index)=>(
-        <li className='ml-10' key={index}>{item.count} added by {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} </li>
+        <li className='ml-10 mt-2' key={index}>{item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelDelete(item)}>Delete</button><button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold'>Edit</button></li>
       ))}
     </ol>
     </div>
