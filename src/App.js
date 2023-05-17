@@ -189,17 +189,19 @@ function App() {
     </div>
     </div>
     <div className='w-[35%] bg-red-400'>
-    <h2 className='text-center mt-20 text-3xl font-semibold'>History</h2>
+    <h2 className='text-center mt-2 text-3xl font-semibold h-[8%]'>History</h2>
+    <div className='h-[6%]'>
     {
       hisinput &&
-      <div>
-      <input className='ml-5 mr-5' onChange={(e)=>setInOne(e.target.value)} value={inone}/>
+      <>
+      <input className='ml-2 mr-1' onChange={(e)=>setInOne(e.target.value)} value={inone}/>
       <input onChange={(e)=>setInTwo(e.target.value)} value={intwo}/>
-      <button onClick={handeleUpdate} className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold ml-5'>Update</button>
-      <button onClick={handeleCancel} className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold ml-5'>Cancel</button>
-      </div>
+      <button onClick={handeleUpdate} className='border-[3px] px-1 rounded-lg bg-white text-lg font-semibold ml-2'>Update</button>
+      <button onClick={handeleCancel} className='border-[3px] px-1 rounded-lg bg-white text-lg font-semibold ml-2'>Cancel</button>
+      </>
     }
-    <ol className='list-decimal text-xl font-medium'>
+    </div>
+    <ol className='list-decimal text-xl font-medium h-[60%]'>
       {historyarr.map((item,index)=>(
         <li className='ml-10 mt-2' key={index}>
         {item.addvaluec}{item.divivaluec}{item.multivaluec}{item.subvaluec} {item.addtext}{item.divitext}{item.multitext}{item.subtext} {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} total value {item.addvaluea}{item.divivaluea}{item.multivaluea}{item.subvaluea}
