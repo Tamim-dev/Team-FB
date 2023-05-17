@@ -155,7 +155,7 @@ function App() {
     <h2 className='text-center mt-20 text-3xl font-semibold'>History</h2>
     <ol className='list-decimal text-2xl font-medium'>
       {historyarr.map((item,index)=>(
-        <li className='ml-8' key={index}>{item.count} added by {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} </li>
+        <li className='ml-10' key={index}>{item.count} added by {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} </li>
       ))}
     </ol>
     </div>
