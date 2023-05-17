@@ -1,5 +1,5 @@
 import { useState,useEffect } from 'react';
-import { getDatabase, ref, set,remove, onValue,push } from "firebase/database";
+import { getDatabase, ref, set,remove, onValue,push, update} from "firebase/database";
 import './App.css';
 
 function App() {
@@ -14,6 +14,10 @@ function App() {
   let [error,setError] = useState (false)
   let [errora,setErrorA] = useState (false)
   let [erroremt,setErrorEmt] = useState (false)
+  let [hisinput,setHisInput] = useState (false)
+  let [inone,setInOne] = useState ("")
+  let [intwo,setInTwo] = useState ("")
+  let [editId,setEditid] =useState ()
   let [count,setCount] = useState(0)
   
 
@@ -42,7 +46,10 @@ function App() {
           setCount(count + add *1)
           setErrorA(false)
           set(push(ref(db, 'Team-fb/')), {
-            addvalue : ` ${count} Added by ${add} toltal value ${count+add*1}`
+            addvalue : `${add}`,
+            addvaluec : count,
+            addvaluea : ` ${count*1+add*1} `,
+            addtext : " added by "
           }).then=()=>{
             console.log("Data geca")
           }
@@ -59,7 +66,10 @@ function App() {
         if (division - 10 || division == 10) {
           setCount(count / division)
           set(push(ref(db, 'Team-fb/')), {
-            divivalue : ` ${count} Divided ${division} toltal value ${count/division}`
+            divivalue : `${division} `,
+            divivaluec : count,
+            divivaluea : `${count/division}`,
+            divitext : " divide by "
           }).then=()=>{
             console.log("Data geca")
           }
@@ -77,7 +87,10 @@ function App() {
           setErrorA(false)
         if (multi - 10 || multi == 10) {
           set(push(ref(db, 'Team-fb/')), {
-            multivalue : ` ${count} Multiplication ${multi} toltal value ${count*multi}`
+            multivalue : `${multi} `,
+            multivaluec : count,
+            multivaluea : `${count*multi}`,
+            multitext : " multiply by "
           }).then=()=>{
             console.log("Data geca")
           }
@@ -96,7 +109,10 @@ function App() {
         setErrorA(false)
         if (sub - 10 || sub == 10) {
           set(push(ref(db, 'Team-fb/')), {
-            subvalue : ` ${count} Minus ${sub} toltal value ${count-sub}`
+            multivalue : `${sub} `,
+            multivaluec : count,
+            multivaluea : `${count-sub}`,
+            multitext : " subtraction by "
           }).then=()=>{
             console.log("Data geca")
           }
@@ -123,6 +139,26 @@ function App() {
     remove(ref(db, 'Team-fb/'+item.id)).then(()=>{
       console.log("delete hoica")
     })
+  }
+
+  let hadelEdit =(item)=>{
+    setHisInput(true)
+    setInOne(item.addvaluec)
+    setInTwo(item.addvalue)
+    setEditid(item.id)
+  }
+  let handeleUpdate =()=>{
+    update(ref(db, 'Team-fb/'+editId),{
+      addvaluec : inone,
+      addvalue : intwo,
+      addvaluea : `${inone*1+intwo*1}`
+    })
+    
+    setInOne("")
+    setInTwo("")
+  }
+  let handeleCancel =()=>{
+    setHisInput(false)
   }
   return (
     <>
@@ -159,9 +195,24 @@ function App() {
     </div>
     <div className='w-[35%] bg-red-400'>
     <h2 className='text-center mt-20 text-3xl font-semibold'>History</h2>
+    {
+      hisinput &&
+      <div>
+      <input className='ml-5 mr-5' onChange={(e)=>setInOne(e.target.value)} value={inone}/>
+      <input onChange={(e)=>setInTwo(e.target.value)} value={intwo}/>
+      <button onClick={handeleUpdate} className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold ml-5'>Update</button>
+      <button onClick={handeleCancel} className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold ml-5'>Cancel</button>
+      </div>
+    }
     <ol className='list-decimal text-xl font-medium'>
       {historyarr.map((item,index)=>(
-        <li className='ml-10 mt-2' key={index}>{item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelDelete(item)}>Delete</button><button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold'>Edit</button></li>
+        <li className='ml-10 mt-2' key={index}>
+        {item.addvaluec}{item.divivaluec}{item.multivaluec}{item.subvaluec} 
+        
+        {item.addtext}{item.divitext}{item.multitext}{item.subtext}
+
+        {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} total value {item.addvaluea}{item.divivaluea}{item.multivaluea}{item.subvaluea}
+         <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelDelete(item)}>Delete</button><button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelEdit(item)}>Edit</button></li>
       ))}
     </ol>
     </div>
