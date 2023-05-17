@@ -20,7 +20,6 @@ function App() {
   let [editId,setEditid] =useState ()
   let [count,setCount] = useState(0)
   
-
   useEffect (()=>{
     const teamRef = ref(db, 'Team-fb/');
 
@@ -33,7 +32,6 @@ function App() {
   });
   },[])
 
-  
   let handelClick =()=>{
     setErrorEmt(false)
       if(add !== "" && division == "" && multi == "" && sub == ""){
@@ -57,8 +55,6 @@ function App() {
           setErrorA(true)
           setError(false)
         }
-        
-  
       }else if(add =="" && division !== "" && multi == "" && sub == ""){
           setDivision("")
           setError(false)
@@ -80,7 +76,6 @@ function App() {
         } else {
             setErrorA(true)
         }
-  
       }else if(add =="" && division == "" && multi !== "" && sub == ""){
           setMulti("")
           setError(false)
@@ -153,9 +148,9 @@ function App() {
       addvalue : intwo,
       addvaluea : `${inone*1+intwo*1}`
     })
-    
     setInOne("")
     setInTwo("")
+    setHisInput(false)
   }
   let handeleCancel =()=>{
     setHisInput(false)
@@ -207,16 +202,11 @@ function App() {
     <ol className='list-decimal text-xl font-medium'>
       {historyarr.map((item,index)=>(
         <li className='ml-10 mt-2' key={index}>
-        {item.addvaluec}{item.divivaluec}{item.multivaluec}{item.subvaluec} 
-        
-        {item.addtext}{item.divitext}{item.multitext}{item.subtext}
-
-        {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} total value {item.addvaluea}{item.divivaluea}{item.multivaluea}{item.subvaluea}
+        {item.addvaluec}{item.divivaluec}{item.multivaluec}{item.subvaluec} {item.addtext}{item.divitext}{item.multitext}{item.subtext} {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} total value {item.addvaluea}{item.divivaluea}{item.multivaluea}{item.subvaluea}
          <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelDelete(item)}>Delete</button><button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelEdit(item)}>Edit</button></li>
       ))}
     </ol>
     </div>
-    
     </div>
     </>
   );
