@@ -31,7 +31,7 @@ function App() {
 
   
   let handelClick =()=>{
-    
+    setErrorEmt(false)
       if(add !== "" && division == "" && multi == "" && sub == ""){
         setAdd("")
         setError(false)
