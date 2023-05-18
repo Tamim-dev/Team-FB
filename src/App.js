@@ -62,9 +62,9 @@ function App() {
         if (division - 10 || division == 10) {
           setCount(count / division)
           set(push(ref(db, 'Team-fb/')), {
-            divivalue : `${division} `,
-            divivaluec : count,
-            divivaluea : `${count/division}`,
+            addvalue : `${division}`,
+            addvaluec : count,
+            addvaluea : `${count/division}`,
             divitext : " divide by "
           }).then=()=>{
             console.log("Data geca")
@@ -82,9 +82,9 @@ function App() {
           setErrorA(false)
         if (multi - 10 || multi == 10) {
           set(push(ref(db, 'Team-fb/')), {
-            multivalue : `${multi} `,
-            multivaluec : count,
-            multivaluea : `${count*multi}`,
+            addvalue : `${multi}`,
+            addvaluec : count,
+            addvaluea : `${count*multi}`,
             multitext : " multiply by "
           }).then=()=>{
             console.log("Data geca")
@@ -104,9 +104,9 @@ function App() {
         setErrorA(false)
         if (sub - 10 || sub == 10) {
           set(push(ref(db, 'Team-fb/')), {
-            multivalue : `${sub} `,
-            multivaluec : count,
-            multivaluea : `${count-sub}`,
+            addvalue : `${sub}`,
+            addvaluec : count,
+            addvaluea : `${count-sub}`,
             multitext : " subtraction by "
           }).then=()=>{
             console.log("Data geca")
@@ -146,7 +146,7 @@ function App() {
     update(ref(db, 'Team-fb/'+editId),{
       addvaluec : inone,
       addvalue : intwo,
-      addvaluea : `${inone*1+intwo*1}`
+      addvaluea : inone*1+intwo*1
     })
     setInOne("")
     setInTwo("")
@@ -194,8 +194,8 @@ function App() {
     {
       hisinput &&
       <>
-      <input className='ml-2 mr-1' onChange={(e)=>setInOne(e.target.value)} value={inone}/>
-      <input onChange={(e)=>setInTwo(e.target.value)} value={intwo}/>
+      <input className='ml-2 mr-1' onChange={(e)=>setInOne(e.target.value)} value={inone}/> 
+      <input onChange={(e)=>setInTwo(e.target.value)} value={intwo}/> 
       <button onClick={handeleUpdate} className='border-[3px] px-1 rounded-lg bg-white text-lg font-semibold ml-2'>Update</button>
       <button onClick={handeleCancel} className='border-[3px] px-1 rounded-lg bg-white text-lg font-semibold ml-2'>Cancel</button>
       </>
@@ -203,9 +203,7 @@ function App() {
     </div>
     <ol className='list-decimal text-xl font-medium h-[60%]'>
       {historyarr.map((item,index)=>(
-        <li className='ml-10 mt-2' key={index}>
-        {item.addvaluec}{item.divivaluec}{item.multivaluec}{item.subvaluec} {item.addtext}{item.divitext}{item.multitext}{item.subtext} {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} total value {item.addvaluea}{item.divivaluea}{item.multivaluea}{item.subvaluea}
-         <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelDelete(item)}>Delete</button><button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelEdit(item)}>Edit</button></li>
+        <li className='ml-10 mt-2' key={index}> {item.addvaluec}{item.divivaluec}{item.multivaluec}{item.subvaluec} {item.addtext}{item.divitext}{item.multitext}{item.subtext} {item.addvalue}{item.divivalue}{item.multivalue}{item.subvalue} total value {item.addvaluea} <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelDelete(item)}>Delete</button> <button className='border-[3px] px-2 rounded-lg bg-white text-xl font-semibold' onClick={()=>hadelEdit(item)}>Edit</button></li>
       ))}
     </ol>
     </div>
