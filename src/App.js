@@ -24,8 +24,14 @@ function App() {
     let [hisinput, setHisInput] = useState(false);
     let [inone, setInOne] = useState("");
     let [intwo, setInTwo] = useState("");
+    let [addedit, setAddEdit] = useState("");
+    let [diviedit, setDiviEdit] = useState("");
+    let [multiedit, setMultiEdit] = useState("");
+    let [subedit, setSubEdit] = useState("");
     let [editId, setEditid] = useState();
     let [count, setCount] = useState(0);
+
+    console.log(diviedit);
 
     useEffect(() => {
         const countRef = ref(db, "total/");
@@ -41,6 +47,10 @@ function App() {
             let arr = [];
             snapshot.forEach((item) => {
                 arr.push({ ...item.val(), id: item.key });
+                setDiviEdit(item.val(item.divitext));
+                setAddEdit(item.val(item.addtext));
+                setMultiEdit(item.val(item.addtext));
+                setSubEdit(item.val(item.addtext));
             });
             setHistoryArr(arr);
         });
@@ -88,7 +98,7 @@ function App() {
                 set(push(ref(db, "Team-fb/")), {
                     addvalue: `${division}`,
                     addvaluec: count,
-                    addvaluea: `${count / division}`,
+                    divivaluea: `${count / division}`,
                     divitext: " divided by ",
                 });
                 if (count == 0 && (division - 10 || division == 10)) {
@@ -111,7 +121,7 @@ function App() {
                 set(push(ref(db, "Team-fb/")), {
                     addvalue: `${multi}`,
                     addvaluec: count,
-                    addvaluea: `${count * multi}`,
+                    multivaluea: `${count * multi}`,
                     multitext: " multiply by ",
                 });
                 if (count == 0 && (multi - 10 || multi == 10)) {
@@ -134,7 +144,7 @@ function App() {
                 set(push(ref(db, "Team-fb/")), {
                     addvalue: `${sub}`,
                     addvaluec: count,
-                    addvaluea: `${count - sub}`,
+                    subvaluea: `${count - sub}`,
                     multitext: " subtraction by ",
                 });
                 if (count == 0 && (sub - 10 || sub == 10)) {
@@ -167,11 +177,20 @@ function App() {
     };
 
     let handeleUpdate = () => {
-        update(ref(db, "Team-fb/" + editId), {
-            addvaluec: inone,
-            addvalue: intwo,
-            addvaluea: Number(inone) + Number(intwo),
-        });
+        if( diviedit){
+            update(ref(db, "Team-fb/" + editId), {
+                addvaluec: inone,
+                addvalue: intwo,
+                divivaluea: Number(inone) + Number(intwo),
+            });
+        }else if(addedit){
+            update(ref(db, "Team-fb/" + editId), {
+                addvaluec: inone,
+                addvalue: intwo,
+                divivaluea: inone / intwo,
+            });
+        }
+        
         setInOne("");
         setInTwo("");
         setHisInput(false);
@@ -303,7 +322,7 @@ function App() {
                                 {item.subtext} {item.addvalue}
                                 {item.divivalue}
                                 {item.multivalue}
-                                {item.subvalue} total value {item.addvaluea}
+                                {item.subvalue} total value {item.addvaluea}{item.divivaluea}
                                 <button
                                     className="border-[3px] px-2 rounded-lg bg-white text-xl font-semibold"
                                     onClick={() => hadelDelete(item)}
